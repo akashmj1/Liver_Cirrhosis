@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <title>Liver Prediction Model</title>
+
+    <style>
+        /* Background Image */
+        body {
+            background-image: url({{url_for('static', filename='images/Liver.jpg')}});
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .submit-button {
+            background-color: #04AA6D; /* Green */
+            border: none;
+            color: white;
+            font-size: 12px;
+        }
+
+        /* Color */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .whole {
+            display: flex;
+            align-items: center;
+            padding-left: 3rem;
+        }
+
+        .boxes{
+            margin: 0 auto;
+            float: none;
+            width:20%;
+            padding:1.5rem;
+            margin-bottom: 10px;
+            background-color: white;
+            border: 1px solid #c209d6;
+            border-width: 0.05rem;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;;
+            border-radius: 15px;
+
+        }
+
+        .boxes:hover{
+            background-color: #80ffce;
+        }
+
+        /* Heading Font */
+        .container-heading {
+
+        }
+
+        .heading_font {
+            color: white;
+            font-family: 'Pacifico', cursive;
+            font-size: 50px;
+            font-weight: normal;
+        }
+
+        /* Box */
+        #day {
+            border-radius: 14px;
+            height: 20px;
+            width: 150px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        #attri {
+            border-radius: 14px;
+            height: 40px;
+            width: 150px;
+            font-size: 20px;
+            text-align: center;
+            width: 10rem;
+            background-color:#f1f1f7;
+            border-radius:7px;
+            border:none;
+            margin-bottom: -1rem;
+            width:90%;
+        }
+
+        h3{
+            font-weight: bold;
+            font-family: "Helvetica",sans;
+            color: #04AA6D;
+            font-size: 1.2rem;
+            padding-bottom: 0.1rem;
+        }
+
+        /* Submit Button */
+        #sub {
+            width: 120px;
+            height: 43px;
+            text-align: center;
+            border-radius: 14px;
+            font-size: 18px;
+
+        }
+        .choose{
+            width:80%;
+            height: 40px;
+            border-radius:14px;
+            background-color:#f1f1f7;
+        }
+        .heading{
+        font-size: 30px;
+        color:white;
+        font-family: 'Pacifico', cursive;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class='container-heading'><span class="heading_font">Liver Disease Prediction</span></h2>
+        <span class="heading">Enter the Details of Patient Based on Medical Report</span>
+    </div>
+
+    <div class="ml-container">
+        <form action="{{ url_for('predict') }}" method="POST">
+            <br>
+            <div class="whole">
+                <div class="boxes">
+                    <h3>Days</h3>
+                    <input id="attri" name="Days" min="51" max="5000" placeholder="Days" required="required">
+                    <br>
+                </div>
+                <div class="boxes">
+                    <h3>Age</h3>
+                    <input type="number" id="attri" name="Age" min="5" max="100" placeholder="in Year" required="required">
+                </div>
+                <div class="boxes">
+                    <h3>Gender</h3>
+                   <select name="sex" id="sex" class="choose" required="required">
+                                    <option value="female">Female</option>
+                                    <option value="male">Male</option>
+                   </select>
+                </div>
+            </div>
+            <div class="whole">
+                <div class="boxes">
+                    <h3>Ascites</h3>
+                    <select name="Ascites" id="Ascites" class="choose" required="required">
+                                <option value="Yes">YES</option>
+                                <option value="No">NO</option>
+                    </select>
+                </div>
+                <div class="boxes">
+                    <h3>Hepatomegaly</h3>
+                    <select name="Hepatomegaly" id="Hepatomegaly" class="choose" required="required">
+                        <option value="Yes">YES</option>
+                        <option value="No">NO</option>
+                    </select>
+                </div>
+                <div class="boxes">
+                    <h3>Spiders</h3>
+                    <select name="Spiders" id="Spiders" class="choose" required="required">
+                                <option value="Yes">YES</option>
+                                <option value="No">NO</option>
+                    </select>
+                </div>
+            </div>
+            <div class="whole">
+                <div class="boxes">
+                    <h3>Edema</h3>
+                    <select name="Edema" id="Edema" class="choose" required="required">
+                                <option value="No">NO</option>
+                                <option value="Yes">YES</option>
+                    </select>
+                </div>
+                <div class="boxes">
+                    <h3>Total Bilirubin</h3>
+                    <input type="number" min="0" max="31.0" step="0.1" id="attri" name="Total_Bilirubin" placeholder="Total Bilirubin" required="required">
+                </div>
+                <div class="boxes">
+                    <h3>Direct Bilirubin</h3>
+                    <input type="number" min="0.1" max="15"  step="0.1" id="attri" name="Direct_Bilirubin" placeholder="Direct Bilirubin"
+                        required="required">
+                </div>
+            </div>
+            <div class="whole">
+                <div class="boxes">
+                    <h3>Alkaline Phosphotase</h3>
+                    <input type="number" min="100" max="1500" id="attri" name="Alkaline_Phosphotase" placeholder="Alkaline Phosphotase"
+                        required="required">
+                </div>
+                <div class="boxes">
+                    <h3>Alamine Aminotransferase</h3>
+                    <input type="number" min="10" max="2000" id="attri" name="Alamine_Aminotransferase" placeholder="Alamine Aminotransferase"
+                        required="required">
+                </div>
+                <div class="boxes">
+                    <h3>Aspartate Aminotransferase</h3>
+                    <input type="number" min="10" max="3000" id="attri" name="Aspartate_Aminotransferase" placeholder="Aspartate Aminotransferase"
+                        required="required">
+                </div>
+            </div>
+
+            <div class="whole">
+                <div class="boxes">
+                    <h3>Total Protiens</h3>
+                        <input type="number" min="4.1" max="10" step="0.1" id="attri" name="Total_Protiens" placeholder="Total Protiens" required="required">
+                    </div>
+                    <div class="boxes">
+                        <h3>Albumin</h3>
+                        <input type="number" min="1.0" max="5.0" step="0.01" id="attri" name="Albumin" placeholder="Albumin" required="required">
+                    </div>
+                    <div class="boxes">
+                        <h3>Albumin and Globulin Ratio</h3>
+                        <input  type="number" min="0.1" max="2.0" step="0.01" id="attri" name="Albumin_and_Globulin_Ratio" placeholder="Albumin and Globulin Ratio"
+                            required="required">
+                    </div>
+                </div>
+            <br>
+            <br>
+            <div>
+                <button id="sub" type="submit" class="submit-button">Submit</button>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p class='footer-description'>©2024 AJ & Team</p>
+        </form>
+    </div>
+
+</body>
+
+</html>
